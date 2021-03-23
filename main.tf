@@ -9,6 +9,7 @@ module "aemvpc" {
 module "aem_ec2" {
   source = "./ec2/"
   subnet_private = [module.aemvpc.private_subnet_one, module.aemvpc.private_subnet_two]
+  subnet_public = module.aemvpc.public_subnet_one
   depends_on=[module.aemvpc]
 
 }

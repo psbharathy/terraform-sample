@@ -14,6 +14,20 @@ resource "aws_instance" "aem_dispatcher" {
   }
 }
 
+resource "aws_instance" "aem_bastion" {
+  ami                         = var.ami_bastion
+  instance_type               = "t2.micro"
+  subnet_id                   =  var.subnet_public
+  vpc_security_group_ids      = [var.vpc_security_group_id]
+  associate_public_ip_address	= true
+
+  tags = {
+    Name = "AEM Bastion"
+    Purpose  = "Bastion"
+    Creator  = "Terraform"
+  }
+}
+
 resource "aws_instance" "aem_publisher" {
   ami                         = var.publisher_ami_id
   instance_type               = "t2.micro"

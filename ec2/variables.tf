@@ -2,6 +2,13 @@ variable "subnet_private" {
     type        = list(string)
     default     = ["172.31.1.0/24","172.31.2.0/24"]
 }
+variable "subnet_public" {
+    type        = string
+}
+variable "ami_bastion" {
+    type        = string
+    default     = "ami-042e8287309f5df03"
+}
 variable "dispatcher_ami_id" {
     type        = string
     default     = "ami-042e8287309f5df03"

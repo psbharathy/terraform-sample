@@ -31,8 +31,6 @@ resource "aws_alb_target_group_attachment" "aem_tga_two" {
   port = 80
 }
 
-
-
 # # ALB Step 3 HTTP
 # # Create a new application load balancer listener for HTTP.
 # resource "aws_alb_listener" "aem_listener" {
