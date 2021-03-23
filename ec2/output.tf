@@ -10,6 +10,10 @@ output "ec2_aem_publisher_node" {
 output "ec2_aem_author_node" {
   value = aws_instance.aem_author
 }
-output "ec2_aem_author_dispatcher_node" {
-  value = aws_instance.aem_author_dispatcher
+output "ec2_aem_author_dispatcher_node_one" {
+  value = aws_instance.aem_author_dispatcher[0].id
+}
+
+output "ec2_aem_author_dispatcher_node_two" {
+  value = aws_instance.aem_author_dispatcher[1].id
 }

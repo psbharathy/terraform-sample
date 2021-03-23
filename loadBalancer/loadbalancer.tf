@@ -18,18 +18,52 @@ resource "aws_alb_target_group" "aem_tg" {
   vpc_id   = var.subnet_prefixes[0]
 }
 
-
 # ALB Step 2 HTTP
 resource "aws_alb_target_group_attachment" "aem_tga" {
   target_group_arn = aws_alb_target_group.aem_tg.arn
   target_id = var.ec2_aem_dispatcher_one
   port = 80
 }
+
 resource "aws_alb_target_group_attachment" "aem_tga_two" {
   target_group_arn = aws_alb_target_group.aem_tg.arn
   target_id = var.ec2_aem_dispatcher_two
   port = 80
 }
+
+resource "aws_alb" "author" {
+  name            = "aem-instance-alb"
+  subnets         = var.vpc_id
+  security_groups = [var.alb_security_groups]
+  internal        = true
+  tags            = {
+    Name     = "aem-instance-alb"
+    PURPOSE  = "aem"
+    CREATOR  = "Terraform"
+  }
+}
+# ALB Step 1 HTTP
+resource "aws_alb_target_group" "aem_author_tg" {
+  name     = "aem-author-tg"
+  port     = 80
+  protocol = "HTTP"
+  vpc_id   = var.subnet_private
+}
+
+# ALB Author Step 2 HTTP
+resource "aws_alb_target_group_attachment" "aem_author_tga" {
+  target_group_arn = aws_alb_target_group.aem_author_tg.arn
+  target_id = var.ec2_aem_author_dispatcher_one
+  port = 80
+}
+
+resource "aws_alb_target_group_attachment" "aem_author_tga_two" {
+  target_group_arn = aws_alb_target_group.aem_author_tg.arn
+  target_id = var.ec2_aem_author_dispatcher_two
+  port = 80
+}
+
+
 
 # # ALB Step 3 HTTP
 # # Create a new application load balancer listener for HTTP.
