@@ -17,7 +17,10 @@ module "aem-alb" {
   source = "./loadBalancer/"
   vpc_id =  [module.aemvpc.vpc_id]
   subnet_prefixes = [module.aemvpc.public_subnet_one]
-  depends_on=[module.aemvpc]
+  ec2_aem_dispatcher_one = module.aem_ec2.ec2_aem_dispatcher_one
+  ec2_aem_dispatcher_two = module.aem_ec2.ec2_aem_dispatcher_two
+
+  depends_on=[module.aemvpc, module.aem_ec2]
 }
 
 # module "aem-cloudfront" {

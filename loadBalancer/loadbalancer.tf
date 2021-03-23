@@ -19,12 +19,19 @@ resource "aws_alb_target_group" "aem_tg" {
 }
 
 
-# # ALB Step 2 HTTP
-# resource "aws_alb_target_group_attachment" "aem_tga" {
-#   target_group_arn = aws_alb_target_group.aem_tg.arn
-#   target_id        = aws_instance.aem.id
-#   port             = 80
-# }
+# ALB Step 2 HTTP
+resource "aws_alb_target_group_attachment" "aem_tga" {
+  target_group_arn = aws_alb_target_group.aem_tg.arn
+  target_id = var.ec2_aem_dispatcher_one
+  port = 80
+}
+resource "aws_alb_target_group_attachment" "aem_tga_two" {
+  target_group_arn = aws_alb_target_group.aem_tg.arn
+  target_id = var.ec2_aem_dispatcher_two
+  port = 80
+}
+
+
 
 # # ALB Step 3 HTTP
 # # Create a new application load balancer listener for HTTP.
