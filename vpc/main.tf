@@ -1,8 +1,3 @@
- provider "aws" {
-   region = "us-east-1"
- }
-
-
 resource "aws_vpc" "aem-vpc" {
   cidr_block = var.cidr_vpc
   enable_dns_support   = true

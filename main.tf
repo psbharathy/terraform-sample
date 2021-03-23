@@ -24,16 +24,13 @@ module "aem-alb" {
 
   ec2_aem_author_dispatcher_one = module.aem_ec2.ec2_aem_author_dispatcher_node_one
   ec2_aem_author_dispatcher_two = module.aem_ec2.ec2_aem_author_dispatcher_node_two
-
-
-
   depends_on=[module.aemvpc, module.aem_ec2]
 }
 
-# module "aem-cloudfront" {
-#   source = "./cloudfront/"
-#   domain_name = ["example.com"]
-#   vpc_id =  [module.aemvpc.vpc_id]
-#   aem_elb_origin_id=[module.aem-alb.vpc_id]
-#   subnet_prefixes = [module.aemvpc.public_subnet_one]
-# }
+module "aem-cloudfront" {
+  source = "./cloudfront/"
+  domain_name = "example.com"
+  aem_elb_name = module.aem-alb.aem_elb_name
+  aem_elb_origin_id= module.aem-alb.aem_elb_origin_id
+  depends_on=[module.aemvpc, module.aem-alb]
+}
