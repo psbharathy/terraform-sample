@@ -8,8 +8,9 @@ module "aemvpc" {
 
 module "aem_ec2" {
   source = "./ec2/"
-  vpc_id =  [module.aemvpc.vpc_id]
-  subnet_prefixes = [module.aemvpc.public_subnet_one]
+  subnet_private = [module.aemvpc.private_subnet_one, module.aemvpc.private_subnet_two]
+  depends_on=[module.aemvpc]
+
 }
 
 module "aem-alb" {
@@ -18,7 +19,6 @@ module "aem-alb" {
   subnet_prefixes = [module.aemvpc.public_subnet_one]
   depends_on=[module.aemvpc]
 }
-
 
 # module "aem-cloudfront" {
 #   source = "./cloudfront/"
